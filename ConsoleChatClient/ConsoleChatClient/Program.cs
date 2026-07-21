@@ -1,99 +1,56 @@
 ﻿using System;
 using System.Net.NetworkInformation;
+using ConsoleChatClient;
 using Microsoft.AspNetCore.SignalR.Client;
-public record UserConnection(string UserName, string ChatRoom);
+
 class Program
 {
-    static async Task Main(string[] args)
+    private const string URL = "http://localhost:5000/chat";
+    public static async Task Main(string[] args)
     {
-
-        string userName = EnterName();
+        var consoleUI = new ConsoleUI();
+        string userName = consoleUI.AskUserName();
         while (true)
         {
-            string chatRoom = EnterChatRoom();
-            if (chatRoom == "/quit")
+            string chatRoom = consoleUI.AskChatRoomName();
+            if (chatRoom == "/exit") break;
+
+            UserConnection userConnection = new UserConnection(userName, chatRoom);
+
+            ChatService chatService = new ChatService(URL);
+
+            chatService.OnMessageReceived += (sender, message) =>
             {
-                Console.WriteLine("Goodbye!");
-                break;
+                consoleUI.DisplayMessage(sender, message, userName);
+            };
+            try
+            {
+                consoleUI.DisplayInfo("Connection...");
+                await chatService.GetConnectionAsync(userConnection);
+                consoleUI.DisplayInfo($"You are now connected to the chat room {chatRoom}. Enter \"/quit\" to disconnect.");
+                await RunChatLoop(chatService, userConnection, consoleUI);
             }
-            var userConnection = new UserConnection(userName, chatRoom);
-            HubConnection connection = await StartConnection(userConnection);
-            if (connection == null) continue;
-
-            await RunChatLoop(connection, userConnection);
+            catch(Exception ex)
+            {
+                consoleUI.DisplayInfo($"Connection error: {ex.Message}");
+            }
         }
     }
-   
-    private static async Task LeaveChat(HubConnection connection, UserConnection userConnection)
-    {
-        try {
-            await connection.InvokeAsync("LeaveChat", userConnection);
-        }
-        finally
-        {
-            await connection.DisposeAsync();
-        }
-
-        Console.WriteLine($"You leave {userConnection.ChatRoom}");
-    }
-    private static string EnterName()
-    {
-        Console.Write("Enter your name: ");
-        string userName = Console.ReadLine() ?? "Anonimus";
-        return userName;
-    }
-    private static string EnterChatRoom()
-    {
-        Console.Write("Enter chat room name: ");
-        string chatRoom = Console.ReadLine() ?? "General";
-        return chatRoom;
-    }
-    private async static Task RunChatLoop(HubConnection connection, UserConnection userConnection)
+    private static async Task RunChatLoop(ChatService chatService, UserConnection userConnection, ConsoleUI consoleUI)
     {
         while (true)
         {
-            Console.Write("> ");
             string message = Console.ReadLine() ?? "";
-            if (message == "/exit")
+            if (message == "/quit")
             {
-                await LeaveChat(connection, userConnection);
+                await chatService.LeaveChatAsync(userConnection);
+                consoleUI.DisplayInfo("You have left the chat room.");
                 break;
             }
-            if (!string.IsNullOrEmpty(message))
+            else
             {
-                await connection.InvokeAsync("SendMessage", userConnection, message);
+                await chatService.SendMessageAsync(userConnection, message);
             }
         }
-    }
-    private async static Task<HubConnection> StartConnection(UserConnection userConnection)
-    {
-        var connection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:5000/chat")
-            .WithAutomaticReconnect()
-            .Build();
-
-        RegisterHandlers(connection);
-
-        try
-        {
-            Console.WriteLine("Connetion...");
-            await connection.StartAsync();
-
-            await connection.InvokeAsync("JoinChat", userConnection);
-            return connection;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-            return null;
-        }
-    }
-    private static void RegisterHandlers(HubConnection connection)
-    {
-        connection.On<string, string>("ReceiveMessage", (user, message) =>
-        {
-            Console.WriteLine($"\n[{user}]: {message}");
-            Console.Write("> ");
-        });
     }
 }

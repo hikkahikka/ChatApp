@@ -14,7 +14,7 @@ public class ChatHub : Hub<IChatClient>
         await Groups.AddToGroupAsync(Context.ConnectionId, connection.ChatRoom);
         await Clients
             .Group(connection.ChatRoom)
-            .ReceiveMessage("Admin", $"{connection.UserName} join to chat");
+            .ReceiveMessage("System", $"{connection.UserName} join to chat");
     }
     public async Task SendMessage(UserConnection connection, string message)
     {
@@ -27,6 +27,6 @@ public class ChatHub : Hub<IChatClient>
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, connection.ChatRoom);
         await Clients
             .Group(connection.ChatRoom)
-            .ReceiveMessage("Admin", $"{connection.UserName} leave chat");
+            .ReceiveMessage("System", $"{connection.UserName} leave chat");
     }
 }
