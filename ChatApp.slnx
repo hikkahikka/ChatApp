@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/ChatServer/">
+    <Project Path="ChatServer/ChatServer/ChatServer.csproj" />
+  </Folder>
+  <Folder Name="/ConsoleChatClient/">
+    <Project Path="ConsoleChatClient/ConsoleChatClient/ConsoleChatClient.csproj" />
+  </Folder>
+</Solution>
