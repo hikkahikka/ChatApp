@@ -10,12 +10,12 @@ namespace ConsoleChatClient
         {
             var defaultColor = Console.ForegroundColor;
 
-            if(sender == currentUserName)
+            if (sender == currentUserName)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine($"[You]: {message}");
             }
-            else if(sender == "System")
+            else if (sender == "System")
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"[System]: {message}");
@@ -28,10 +28,20 @@ namespace ConsoleChatClient
             Console.Write("> ");
             Console.ForegroundColor = defaultColor;
         }
+        public void ClearLastInputLine()
+        {
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+
+            Console.Write(new string(' ', Console.WindowWidth));
+
+            Console.SetCursorPosition(0, Console.CursorTop);
+        }
         public void DisplayInfo(string message)
         {
             var defaultColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(message);
+            Console.ForegroundColor = defaultColor;
         }
         public string AskUserName()
         {

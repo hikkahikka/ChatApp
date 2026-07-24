@@ -41,6 +41,7 @@ class Program
         while (true)
         {
             string message = Console.ReadLine() ?? "";
+            consoleUI.ClearLastInputLine();
             if (message == "/quit")
             {
                 await chatService.LeaveChatAsync(userConnection);
