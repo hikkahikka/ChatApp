@@ -7,7 +7,7 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
 {
     public void Configure(EntityTypeBuilder<Message> builder)
     {
-        builder.HasKey(m => m.MessageId);
+        builder.HasKey(m => m.Id);
         builder.HasOne(s => s.Sender)
             .WithMany(m => m.Messages)
             .HasForeignKey(s => s.SenderId)

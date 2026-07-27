@@ -7,7 +7,7 @@ public class ChatRoomConfiguration : IEntityTypeConfiguration<ChatRoom>
 {
     public void Configure(EntityTypeBuilder<ChatRoom> builder)
     {
-        builder.HasKey(c => c.ChatRoomId);
+        builder.HasKey(c => c.Id);
         builder.Property(c => c.Name)
             .IsRequired()
             .HasMaxLength(100);
