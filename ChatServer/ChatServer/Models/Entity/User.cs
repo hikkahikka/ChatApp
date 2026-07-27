@@ -4,8 +4,7 @@
     {
         public Guid UserId { get; set; }
         public string Name { get; set; } = default!;
-        public Guid? ChatRoomId { get; set; }
-        public ChatRoom? ChatRoom { get; set; }
+        public List<ChatRoom> ChatRooms { get; set; } = new List<ChatRoom>();
         public List<Message> Messages { get; set; } = new List<Message>();
     }
 }

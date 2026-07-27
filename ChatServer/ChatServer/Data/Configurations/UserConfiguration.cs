@@ -11,9 +11,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Name)
             .IsRequired()
             .HasMaxLength(100);
-        builder.HasOne(c => c.ChatRoom)
-            .WithMany(r => r.Users)
-            .HasForeignKey(c => c.ChatRoomId)
-            .OnDelete(DeleteBehavior.SetNull);
+        builder.HasMany(c => c.ChatRooms)
+            .WithMany(r => r.Users);
     }
 }
