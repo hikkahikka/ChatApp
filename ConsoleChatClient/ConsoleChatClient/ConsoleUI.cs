@@ -35,14 +35,14 @@ namespace ConsoleChatClient
         public string AskUserName()
         {
             Console.Write("Enter your name: ");
-            string userName = Console.ReadLine() ?? "Anonimus";
-            return userName;
+            string? userName = Console.ReadLine();
+            return string.IsNullOrWhiteSpace(userName) ? "Anonimus" : userName;
         }
         public string AskChatRoomName()
         {
             Console.Write("Enter chat room name (or \"/exit\" to exit): ");
-            string chatRoom = Console.ReadLine() ?? "General";
-            return chatRoom;
+            string? chatRoom = Console.ReadLine();
+            return string.IsNullOrWhiteSpace(chatRoom) ? "General" : chatRoom;
         }
         private ConsoleColor GetConsoleColor(string sender, string currentUserName)
         {
