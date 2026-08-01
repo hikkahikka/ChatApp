@@ -1,4 +1,4 @@
-﻿namespace ChatServer.Models.Entity
+﻿namespace ChatServer.Models.Entities
 {
     public class Message : IEntity
     {

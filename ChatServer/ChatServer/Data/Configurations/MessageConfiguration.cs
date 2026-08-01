@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ChatServer.Models.Entity;
+using ChatServer.Models.Entities;
 namespace ChatServer.Data.Configurations;
 
 public class MessageConfiguration : IEntityTypeConfiguration<Message>

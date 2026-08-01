@@ -1,4 +1,4 @@
-﻿using ChatServer.Models.Entity;
+﻿using ChatServer.Models.Entities;
 
 namespace ChatServer.Interfaces
 {

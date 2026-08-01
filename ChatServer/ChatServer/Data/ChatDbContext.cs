@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ChatServer.Models.Entity;
+using ChatServer.Models.Entities;
 namespace ChatServer.Data
 {
     public class ChatDbContext:DbContext

@@ -1,5 +1,5 @@
 ﻿using ChatServer.Interfaces;
-using ChatServer.Models.Entity;
+using ChatServer.Models.Entities;
 
 namespace ChatServer.Data.Repositories
 {

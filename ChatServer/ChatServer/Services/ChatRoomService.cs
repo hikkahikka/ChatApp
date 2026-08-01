@@ -1,6 +1,6 @@
 ﻿namespace ChatServer.Services
 {
-    public class ChatService
+    public class ChatRoomService
     {
     }
 }
