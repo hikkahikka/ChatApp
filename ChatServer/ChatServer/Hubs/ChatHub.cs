@@ -1,28 +1,23 @@
-﻿using ChatServer.Models;
+﻿using ChatServer.Models.DTOs;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ChatServer.Hubs;
-
-public interface IChatClient
-{
-    public Task ReceiveMessage(string userName, string message);
-}
 public class ChatHub : Hub<IChatClient>
 {
-    public async Task JoinChat(UserConnection connection)
+    public async Task JoinChat(UserDTO connection)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, connection.ChatRoom);
         await Clients
             .Group(connection.ChatRoom)
             .ReceiveMessage("System", $"{connection.UserName} join to chat");
     }
-    public async Task SendMessage(UserConnection connection, string message)
+    public async Task SendMessage(UserDTO connection, string message)
     {
         await Clients
             .Group(connection.ChatRoom)
             .ReceiveMessage(connection.UserName, message);
     }
-    public async Task LeaveChat(UserConnection connection)
+    public async Task LeaveChat(UserDTO connection)
     {
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, connection.ChatRoom);
         await Clients
