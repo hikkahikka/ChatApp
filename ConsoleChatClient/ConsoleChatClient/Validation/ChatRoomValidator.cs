@@ -17,6 +17,7 @@ namespace ConsoleChatClient.Validation
 
         public bool Validate(string str)
         {
+            if (str == "/exit") return true;
             if (string.IsNullOrEmpty(str))
             {
                 _consoleUI.DisplayError("Chat room name cannot be null or empty.");
@@ -33,6 +34,7 @@ namespace ConsoleChatClient.Validation
                 _consoleUI.DisplayError($"Chat room name must be no more than {MaxLength} characters long.");
                 return false;
             }
+            
             if (str.Contains("\\") || str.Contains("/"))
             {
                 _consoleUI.DisplayError("Chat room name cannot contain slashes.");

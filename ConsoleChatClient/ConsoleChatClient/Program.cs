@@ -10,6 +10,8 @@ class Program
     {
         var consoleUI = new ConsoleUI();
         string userName = consoleUI.AskUserName();
+
+
         while (true)
         {
             string chatRoom = consoleUI.AskChatRoomName();
@@ -36,6 +38,7 @@ class Program
             }
         }
     }
+    
     private static async Task RunChatLoop(ChatService chatService, UserConnection userConnection, ConsoleUI consoleUI)
     {
         while (true)
