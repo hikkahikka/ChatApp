@@ -6,7 +6,13 @@ namespace ConsoleChatClient
 {
     public class ConsoleUI
     {
-
+        public void DisplayError(string message)
+        {
+            var defaultColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"[Error]: {message}");
+            Console.ForegroundColor = defaultColor;
+        }
         public void DisplayMessage(string sender, string message, string currentUserName)
         {
             var defaultColor = Console.ForegroundColor;
@@ -34,7 +40,7 @@ namespace ConsoleChatClient
         }
         public string AskUserName()
         {
-            Console.Write("Enter your name: ");
+            Console.Write("Enter your name (login): ");
             string? userName = Console.ReadLine();
             return string.IsNullOrWhiteSpace(userName) ? "Anonimus" : userName;
         }
