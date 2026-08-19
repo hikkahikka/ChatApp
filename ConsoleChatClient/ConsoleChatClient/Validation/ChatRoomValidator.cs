@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleChatClient.Validation
 {
-    public class ChatRoomValidator : IValidator
+    public class ChatRoomValidator
     {
 
         private ConsoleUI _consoleUI;
@@ -15,29 +15,30 @@ namespace ConsoleChatClient.Validation
             _consoleUI = consoleUI;
         }
 
-        public bool Validate(string str)
+        public bool Validate(string? str, out string errorMessage)
         {
+            errorMessage = string.Empty;
             if (str == "/exit") return true;
             if (string.IsNullOrEmpty(str))
             {
-                _consoleUI.DisplayError("Chat room name cannot be null or empty.");
+                errorMessage = "Chat room name cannot be null or empty.";
                 return false;
             }
 
             if (str.Length < MinLength)
             {
-                _consoleUI.DisplayError($"Chat room name must be at least {MinLength} characters long.");
+                errorMessage = $"Chat room name must be at least {MinLength} characters long.";
                 return false;
             }
             if (str.Length > MaxLength)
             {
-                _consoleUI.DisplayError($"Chat room name must be no more than {MaxLength} characters long.");
+                errorMessage = $"Chat room name must be no more than {MaxLength} characters long.";
                 return false;
             }
             
             if (str.Contains("\\") || str.Contains("/"))
             {
-                _consoleUI.DisplayError("Chat room name cannot contain slashes.");
+                errorMessage = "Chat room name cannot contain slashes.";
                 return false;
             }
             return true;

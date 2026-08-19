@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleChatClient.Validation
 {
-    public class PasswordValidator: IValidator
+    public class PasswordValidator
     {
         private ConsoleUI _consoleUI;
         private const int MinLength = 6;
@@ -14,22 +14,23 @@ namespace ConsoleChatClient.Validation
             _consoleUI = consoleUI;
         }
 
-        public bool Validate(string str)
+        public bool Validate(string? str, out string errorMessage)
         {
+            errorMessage = string.Empty;
             if (string.IsNullOrEmpty(str))
             {
-                _consoleUI.DisplayError("Password cannot be null or empty.");
+                errorMessage = "Password cannot be null or empty.";
                 return false;
             }
 
             if (str.Length < MinLength)
             {
-                _consoleUI.DisplayError($"Password must be at least {MinLength} characters long.");
+                errorMessage = $"Password must be at least {MinLength} characters long.";
                 return false;
             }
             if (str.Length > MaxLength)
             {
-                _consoleUI.DisplayError($"Password must be no more than {MaxLength} characters long.");
+                errorMessage = $"Password must be no more than {MaxLength} characters long.";
                 return false;
             }
             return true;

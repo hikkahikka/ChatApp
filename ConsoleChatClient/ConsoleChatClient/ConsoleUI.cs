@@ -42,27 +42,35 @@ namespace ConsoleChatClient
         }
         public string AskUserName()
         {
-            IValidator validator = new LoginValidator(this);
+            LoginValidator validator = new LoginValidator(this);
             while (true)
             {
                 Console.Write("Enter your name (login): ");
                 string? userName = Console.ReadLine();
-                if (validator.Validate(userName))
+                if (validator.Validate(userName, out string errorMessage))
                 {
-                    return userName;
+                    return userName!;
+                }
+                else
+                {
+                    DisplayError(errorMessage);
                 }
             }
         }
         public string AskChatRoomName()
         {
-            IValidator validator = new ChatRoomValidator(this);
+            ChatRoomValidator validator = new ChatRoomValidator(this);
             while (true)
             {
                 Console.Write("Enter chat room name (or \"/exit\" to exit): ");
                 string? chatRoom = Console.ReadLine();
-                if (validator.Validate(chatRoom))
+                if (validator.Validate(chatRoom, out string errorMessage))
                 {
-                    return chatRoom;
+                    return chatRoom!;
+                }
+                else
+                {
+                    DisplayError(errorMessage);
                 }
             }
         }

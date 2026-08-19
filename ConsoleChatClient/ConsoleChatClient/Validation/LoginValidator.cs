@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ConsoleChatClient.Validation
 {
-    public class LoginValidator : IValidator
+    public class LoginValidator
     {
         private ConsoleUI _consoleUI;
         private const int MinLength = 2;
@@ -13,31 +13,32 @@ namespace ConsoleChatClient.Validation
         {
             _consoleUI = consoleUI;
         }
-        public bool Validate(string str)
+        public bool Validate(string? str, out string errorMessage)
         {
+            errorMessage = string.Empty;
             if (string.IsNullOrEmpty(str))
             {
-                _consoleUI.DisplayError("Login cannot be null or empty.");
+                errorMessage = "Login cannot be null or empty.";
                 return false;
             }
             if(str.Contains(" "))
             {
-                _consoleUI.DisplayError("Login cannot contain spaces.");
+                errorMessage = "Login cannot contain spaces.";
                 return false;
             }
             if(str.Contains("\\") || str.Contains("/"))
             {
-                _consoleUI.DisplayError("Login cannot contain slashes.");
+                errorMessage = "Login cannot contain slashes.";
                 return false;
             }
             if (str.Length < MinLength)
             {
-                _consoleUI.DisplayError($"Login must be at least {MinLength} characters long.");
+                errorMessage = $"Login must be at least {MinLength} characters long.";
                 return false;
             }
             if (str.Length > MaxLength  )
             {
-                _consoleUI.DisplayError($"Login must be no more than {MaxLength} characters long.");
+                errorMessage = $"Login must be no more than {MaxLength} characters long.";
                 return false;
             }
             return true;
