@@ -1,4 +1,4 @@
-﻿using ConsoleChatClient.Validation;
+﻿using ConsoleChatClient.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -42,7 +42,7 @@ namespace ConsoleChatClient
         }
         public string AskUserName()
         {
-            LoginValidator validator = new LoginValidator(this);
+            LoginValidator validator = new LoginValidator();
             while (true)
             {
                 Console.Write("Enter your name (login): ");
@@ -59,7 +59,7 @@ namespace ConsoleChatClient
         }
         public string AskChatRoomName()
         {
-            ChatRoomValidator validator = new ChatRoomValidator(this);
+            ChatRoomValidator validator = new ChatRoomValidator();
             while (true)
             {
                 Console.Write("Enter chat room name (or \"/exit\" to exit): ");

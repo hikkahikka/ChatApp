@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleChatClient.Validation
+namespace ConsoleChatClient.Validators
 {
     public class LoginValidator
     {
-        private ConsoleUI _consoleUI;
         private const int MinLength = 2;
         private const int MaxLength = 15;
-        public LoginValidator(ConsoleUI consoleUI)
-        {
-            _consoleUI = consoleUI;
-        }
         public bool Validate(string? str, out string errorMessage)
         {
             errorMessage = string.Empty;
