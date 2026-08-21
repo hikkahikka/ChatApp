@@ -5,4 +5,5 @@
   <Folder Name="/ConsoleChatClient/">
     <Project Path="ConsoleChatClient/ConsoleChatClient/ConsoleChatClient.csproj" />
   </Folder>
+  <Project Path="ConsoleChatClient.Tests/ConsoleChatClient.Tests.csproj" Id="3f00d0d9-9f87-4fa1-ace0-989182578430" />
 </Solution>
