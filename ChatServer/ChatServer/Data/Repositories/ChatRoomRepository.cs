@@ -17,5 +17,10 @@ namespace ChatServer.Data.Repositories
                 .Where(room => room.Users.Any(user => user.Id == userId))
                 .ToListAsync();
         }
+        public async Task AddUserAsync(ChatRoom chatRoom, User user)
+        {
+            chatRoom.Users.Add(user);
+            await SaveChangesAsync();
+        }
     }
 }
